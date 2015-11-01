@@ -2,10 +2,15 @@ from flask import (
     render_template,
     flash,
     redirect,
+    request,
     g,
 )
-from app import app, db
-from app.forms import LoginForm, EditForm
+from app import app, db, controllers
+from app.forms import (
+    LoginForm,
+    EditForm,
+    ContactForm,
+)
 from flask.ext.login import (
     login_user,
     logout_user,
@@ -107,6 +112,34 @@ def edit():
     return render_template('edit.html',
                            config=_get_template_config(),
                            form=form)
+
+
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+    form = ContactForm()
+
+    if request.method == 'POST':
+        if not form.validate():
+            flash('All fields are required.')
+            return render_template('contact.html',
+                                   config=_get_template_config(),
+                                   form=form)
+        else:
+
+            name = form.name.data
+            email = form.email.data
+            message = form.message.data
+            user = g.user if g.user.is_authenticated else None
+
+            controllers.ContactController.create_contact(message, email=email, name=name, user=user)
+            flash('Thank you for the feedback!')
+
+            return redirect('/index')
+
+    elif request.method == 'GET':
+        return render_template('contact.html',
+                               config=_get_template_config(),
+                               form=form)
 
 
 @app.before_request

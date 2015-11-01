@@ -38,4 +38,6 @@ class PostView(views.AdminAccessView):
 
 admin = Admin(app, name='Admin Home', template_mode='bootstrap3', index_view=views.AdminAccessIndexView())
 admin.add_view(UserView(tables.User, db.session))
+admin.add_view(UserView(tables.UserSocial, db.session))
+admin.add_view(UserView(tables.UserInfo, db.session))
 admin.add_view(PostView(tables.Post, db.session))

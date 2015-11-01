@@ -34,12 +34,12 @@ class User(db.Model, UserMixin, BaseDBMixin):
 
     __tablename__ = 'User'
 
-    nickname = db.Column(db.String(64), nullable=False)
-    email = db.Column(db.String(64), nullable=True)
+    nickname = db.Column(db.String(63), nullable=False)
+    email = db.Column(db.String(255), nullable=True)
     last_seen = db.Column(db.DateTime)
 
     def __repr__(self):
-        return '<User %r>' % self.nickname
+        return '<User xid:%s - nickname:%s>' % (self.xid, self.nickname)
 
     def is_admin(self):
         if self.id < 10:
@@ -63,8 +63,8 @@ class UserSocial(db.Model, BaseDBMixin):
     )
 
     # NOTE: the combination of `network` and `id` should be unique
-    social_network = db.Column(db.String(64), nullable=False, unique=True)
-    social_id = db.Column(db.String(64), nullable=False, unique=True)
+    social_network = db.Column(db.String(63), nullable=False, unique=True)
+    social_id = db.Column(db.String(255), nullable=False, unique=True)
 
 
 class UserInfo(db.Model, BaseDBMixin):
@@ -78,14 +78,11 @@ class UserInfo(db.Model, BaseDBMixin):
         foreign_keys='UserInfo.user_id',
     )
 
-    about_me = db.Column(db.String(140))
+    about_me = db.Column(db.String(1023))
 
 
 @lm.user_loader
 def load_user(user_id):
-    # if int(user_id) == 1:
-    #     return None
-    # return User.query.filter_by(id=int(user_id)).one()
     return User.query.get(int(user_id))
 
 
@@ -100,8 +97,24 @@ class Post(db.Model, BaseDBMixin):
         foreign_keys='Post.user_id',
     )
 
-    body = db.Column(db.String(140))
+    body = db.Column(db.String(1023))
     timestamp = db.Column(db.DateTime)
 
     def __repr__(self):
         return '<Post %r>' % self.body
+
+
+class Contact(db.Model, BaseDBMixin):
+
+    __tablename__ = 'Contact'
+
+    user_id = db.Column(db.Integer, nullable=True)
+    user = db.relationship(
+        'User',
+        primaryjoin='User.id == Contact.user_id',
+        foreign_keys='Contact.user_id',
+    )
+
+    email = db.Column(db.String(63), nullable=True)
+    name = db.Column(db.String(255), nullable=True)
+    message = db.Column(db.String(1023))

@@ -11,7 +11,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'seekrey -- keaze')
 
 
 BOOTSWATCH_TEMPLATE_LIST = ["paper", "sandstone", "cosmo", "darkly", "yeti", "slate", "superhero"]
-BOOTSWATCH_TEMPLATE = BOOTSWATCH_TEMPLATE_LIST[0]
+BOOTSWATCH_TEMPLATE = BOOTSWATCH_TEMPLATE_LIST[6]
 
 
 OAUTH_CREDENTIALS = {
