@@ -1,0 +1,35 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% for message in get_flashed_messages() %}
+        <p><b>Error</b>: {{ message }}</p>
+    {% endfor %}
+
+{% if current_user.is_authenticated %}
+
+    <h2>Hi, {{ current_user.nickname }}!</h2>
+    <ul>
+        <li><a href="{{ url_for('send_email') }}">Send Email</a></li>
+    </ul>
+
+
+{% else %}
+
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Unauthorized Page</h1>
+
+            <p>This is the default page people land on if they are not authorized and need to login</p>
+
+            <a href="{{ url_for('oauth_authorize', provider='facebook') }}"
+               class="btn btn-social btn-facebook btn-primary btn-lg">
+                <i class="fa fa-facebook"></i> Sign in with Facebook
+            </a>
+
+        </div>
+    </div>
+
+{% endif %}
+{% endblock %}

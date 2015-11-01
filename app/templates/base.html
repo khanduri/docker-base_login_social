@@ -1,0 +1,95 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media="screen">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/{{ config.bootswatch_template }}/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/4.10.1/bootstrap-social.css">
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        {% if title %}
+            <title>{{ title }} - microblog</title>
+        {% else %}
+            <title>microblog</title>
+        {% endif %}
+    </head>
+    <body>
+        <div class="container">
+
+            <div role="navigation" class="navbar navbar-default navbar-static-top">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a href="/" class="navbar-brand">CompanyLogo</a>
+                    </div>
+                    <div class="navbar-collapse collapse">
+                    {% if current_user.is_authenticated %}
+                        <ul class="nav navbar-nav">
+                            <li><a href="/">Link 1</a></li>
+                            <li><a href="/">Link 2</a></li>
+                            <li><a href="/">Link 3</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right visible-md visible-lg">
+                            <li><a href="/">Link 1</a></li>
+                            <li><a href="/">Link 2</a></li>
+                            <li class="dropdown">
+                                <a href="#" data-toggle="dropdown" class="dropdown-toggle">Settings&nbsp;<i class="fa fa-caret-down"></i></a>
+                                <ul role="menu" class="dropdown-menu dropdown-menu-right">
+                                    <li><a href="">Options 1</a></li>
+                                    <li><a href="">Options 2</a></li>
+                                    <li><a href="">Options 3</a></li>
+                                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    {% else %}
+
+                    {% endif %}
+                    </div>
+                </div>
+{#              <a class="brand" href="{{ url_for('index') }}">microblog</a>#}
+            </div>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul>
+                        {% for message in messages %}
+                            <li>{{ message }} </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+
+            <hr>
+
+            {% block content %}{% endblock %}
+
+            <hr>
+
+            <footer>
+                <div class="pull-right">
+                    <span>
+                        <a href="#">Link1</a>
+                        &nbsp;&nbsp;|&nbsp;&nbsp;
+                        <a href="#">Link2</a>
+                        &nbsp;&nbsp;|&nbsp;&nbsp;
+                        <a href="#">Link3</a>
+                    </span>
+                </div>
+                <div class="pull-left">
+                    <span>
+                        © 2015 Company, Inc
+                        &nbsp;&nbsp;|&nbsp;&nbsp;
+                        <a href="#">Link1</a>
+                        &nbsp;&nbsp;|&nbsp;&nbsp;
+                        <a href="#">Link2</a>
+                        &nbsp;&nbsp;|&nbsp;&nbsp;
+                        <a href="#">Link3</a>
+                    </span>
+                </div>
+            </footer>
+
+        </div>
+    </body>
+</html>

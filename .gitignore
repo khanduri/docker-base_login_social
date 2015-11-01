@@ -1,0 +1,13 @@
+bin/
+include/
+lib/
+.Python
+pip-selfcheck.json
+*.pyc
+.idea/*
+app.db
+share/
+.DS_Store
+*.rdb
+keys.sh
+virenv/
