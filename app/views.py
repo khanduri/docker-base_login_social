@@ -94,9 +94,9 @@ def user_page(nickname):
                            posts=posts)
 
 
-@app.route('/edit', methods=['GET', 'POST'])
+@app.route('/profile', methods=['GET', 'POST'])
 @login_required
-def edit():
+def profile():
     form = EditForm()
     if form.validate_on_submit():
         g.user.nickname = form.nickname.data
@@ -104,7 +104,7 @@ def edit():
         db.session.add(g.user)
         db.session.commit()
         flash('Your changes have been saved.')
-        return redirect('/edit')
+        return redirect('/profile')
 
     form.nickname.data = g.user.nickname
     form.about_me.data = g.user.about_me
@@ -224,6 +224,9 @@ def oauth_callback(provider):
         db.session.commit()
     else:
         user = tables.User.query.filter_by(id=user_social.user_id).first()
+        user_social.access_code = access_code
+        db.session.add(user_social)
+        db.session.commit()
 
     login_user(user, True)
     return redirect('/index')

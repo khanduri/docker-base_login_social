@@ -22,25 +22,26 @@
             <div role="navigation" class="navbar navbar-default navbar-static-top">
                 <div class="container-fluid">
                     <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
                         <a href="/" class="navbar-brand">CompanyLogo</a>
                     </div>
-                    <div class="navbar-collapse collapse">
+                    <div class="collapse navbar-collapse">
                     {% if current_user.is_authenticated %}
-                        <ul class="nav navbar-nav">
-                            <li><a href="/">Link 1</a></li>
-                            <li><a href="/">Link 2</a></li>
-                            <li><a href="/">Link 3</a></li>
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right visible-md visible-lg">
-                            <li><a href="/">Link 1</a></li>
-                            <li><a href="/">Link 2</a></li>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="/" data-toggle="collapse" data-target=".navbar-collapse.in">Link 1</a></li>
+                            <li><a href="/" data-toggle="collapse" data-target=".navbar-collapse.in">Link 2</a></li>
                             <li class="dropdown">
                                 <a href="#" data-toggle="dropdown" class="dropdown-toggle">Settings&nbsp;<i class="fa fa-caret-down"></i></a>
                                 <ul role="menu" class="dropdown-menu dropdown-menu-right">
-                                    <li><a href="">Options 1</a></li>
-                                    <li><a href="">Options 2</a></li>
-                                    <li><a href="">Options 3</a></li>
-                                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                                    <li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="">Options 1</a></li>
+                                    <li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="">Options 2</a></li>
+                                    <li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="">Options 3</a></li>
+                                    <li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="{{ url_for('profile') }}">Profile</a></li>
+                                    <li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="{{ url_for('logout') }}">Logout</a></li>
                                 </ul>
                             </li>
                         </ul>
