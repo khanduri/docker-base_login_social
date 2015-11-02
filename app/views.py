@@ -203,6 +203,7 @@ def oauth_callback(provider):
     social_network, social_id = user_oauth_model.social_id.split('$')
     username = user_oauth_model.username
     email = user_oauth_model.email
+    access_code = user_oauth_model.access_code
     # name = user_oauth_model.name
 
     if social_id is None:
@@ -213,7 +214,8 @@ def oauth_callback(provider):
     if not user_social:
         user = tables.User(nickname=username, email=email)
         user_social = tables.UserSocial(social_network=social_network,
-                                        social_id=social_id)
+                                        social_id=social_id,
+                                        access_code=access_code)
         user_social.user = user
 
         db.session.add(user)

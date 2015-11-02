@@ -4,7 +4,8 @@ from flask import current_app, url_for, request, redirect, session
 
 class UserOAuthModel(object):
 
-    def __init__(self, social_id, username, email, name):
+    def __init__(self, access_code, social_id, username, email, name):
+        self.access_code = access_code
         self.social_id = social_id
         self.username = username
         self.email = email
@@ -62,8 +63,10 @@ class FacebookSignIn(OAuthSignIn):
     def callback(self):
         if 'code' not in request.args:
             return None, None, None
+
+        access_code = request.args['code']
         oauth_session = self.service.get_auth_session(
-            data={'code': request.args['code'],
+            data={'code': access_code,
                   'grant_type': 'authorization_code',
                   'redirect_uri': self.get_callback_url()}
         )
@@ -74,7 +77,7 @@ class FacebookSignIn(OAuthSignIn):
         username = email.split('@')[0]  # Facebook does not provide username
         name = me.get('name')
 
-        return UserOAuthModel(social_id, username, email, name)
+        return UserOAuthModel(access_code, social_id, username, email, name)
 
 
 class TwitterSignIn(OAuthSignIn):
@@ -99,6 +102,7 @@ class TwitterSignIn(OAuthSignIn):
 
     def callback(self):
         request_token = session.pop('request_token')
+        access_code = None  # TODO: Get the code here
         if 'oauth_verifier' not in request.args:
             return None, None, None
         oauth_session = self.service.get_auth_session(
@@ -113,4 +117,4 @@ class TwitterSignIn(OAuthSignIn):
         email = None  # Twitter does not provide email
         name = None
 
-        return UserOAuthModel(social_id, username, email, name)
+        return UserOAuthModel(access_code, social_id, username, email, name)

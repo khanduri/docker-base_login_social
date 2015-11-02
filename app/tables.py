@@ -65,6 +65,7 @@ class UserSocial(db.Model, BaseDBMixin):
     # NOTE: the combination of `network` and `id` should be unique
     social_network = db.Column(db.String(63), nullable=False, unique=True)
     social_id = db.Column(db.String(255), nullable=False, unique=True)
+    access_code = db.Column(db.String(2047))
 
 
 class UserInfo(db.Model, BaseDBMixin):
