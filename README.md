@@ -11,7 +11,7 @@ TODO: Initial install and setup for pip
 
  - source keys.sh
 ```
-export SECRET_KEY=''
+export SECRET_KEY='secret key'
 
 
 export OAUTH_CREDENTIALS_FB_ID=''
@@ -24,6 +24,8 @@ export OAUTH_CREDENTIALS_TW_SECRET=''
 export SENDGRID_USER=''
 export SENDGRID_API_KEY=''
 
+
+export HASHIDS_SALT=''
 ```
 
  - Starting up the application server: `./run.py`
