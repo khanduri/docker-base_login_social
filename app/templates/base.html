@@ -3,17 +3,20 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media="screen">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/{{ config.bootswatch_template }}/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/4.10.1/bootstrap-social.css">
+{#        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/4.10.1/bootstrap-social.css">#}
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/css/main.css') }}">
+
         <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" href="{{ url_for('static',filename='styles/css/main.css') }}">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react-router/2.0.0/ReactRouter.js"></script>
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        {% if title %}
-            <title>{{ title }}</title>
+        {% if config.title %}
+            <title>{{ config.title }}</title>
         {% else %}
-            <title>Sample Title</title>
+            <title>CompanyLogo</title>
         {% endif %}
     </head>
     <body>
@@ -62,6 +65,7 @@
             <hr>
 
             {% block content %}{% endblock %}
+            {#    <span class="visible-xs">SIZE XS</span><span class="visible-sm">SIZE SM</span><span class="visible-md">SIZE MD</span><span class="visible-lg">SIZE LG</span>#}
 
             <hr>
 
@@ -98,4 +102,7 @@
 
 
     </body>
+
+    <script src="{{ url_for('static', filename='scripts/js/main.js') }}"></script>
+
 </html>

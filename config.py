@@ -4,6 +4,8 @@ dirname = os.path.split(os.path.dirname(__file__))[-1]
 
 local_db = 'postgresql://localhost/{0}_db'.format(dirname)
 print 'LOCAL DB setup in: {0}'.format(local_db)
+
+
 SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', local_db)
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 
@@ -12,8 +14,14 @@ WTF_CSRF_ENABLED = True
 SECRET_KEY = os.environ.get('SECRET_KEY', 'seekrey -- keaze')
 
 
-BOOTSWATCH_TEMPLATE_LIST = ["paper", "sandstone", "cosmo", "darkly", "yeti", "slate", "superhero"]
-BOOTSWATCH_TEMPLATE = BOOTSWATCH_TEMPLATE_LIST[6]
+BOOTSWATCH_TEMPLATE_LIST = [
+    "paper", "sandstone", "cosmo",
+    "darkly", "yeti", "slate",
+    "superhero", "cerulean", "united",
+    "spacelab", "simplex", "lumen",
+    "flatly", "journal", "cyborg",
+]
+BOOTSWATCH_TEMPLATE = BOOTSWATCH_TEMPLATE_LIST[7]
 
 
 OAUTH_CREDENTIALS = {

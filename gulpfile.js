@@ -30,12 +30,12 @@ gulp.task('transform', ['clean'], function(){
   return gulp.src('static/scripts/jsx/*.jsx')
     .pipe(react({harmony: false,}))
     .pipe(concat('main.js'))
-    .pipe(gulp.dest('static/scripts/js/compiled'))
+    .pipe(gulp.dest('static/scripts/js'))
     .pipe(size());
 });
 
 gulp.task('clean', function(){
-  return gulp.src(['static/scripts/js/compiled'], {read: false})
+  return gulp.src(['static/scripts/js'], {read: false})
     .pipe(clean());
 });
 

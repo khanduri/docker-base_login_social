@@ -10,6 +10,8 @@
         <li><a href="{{ url_for('send_email') }}">Send Email</a></li>
     </ul>
 
+    <div id="content"></div>
+
 
 {% else %}
 
@@ -22,6 +24,10 @@
             <a href="{{ url_for('oauth_authorize', provider='facebook') }}"
                class="btn btn-social btn-facebook btn-primary btn-lg">
                 <i class="fa fa-facebook"></i> Sign in with Facebook
+            </a>
+            <a href="{{ url_for('oauth_authorize', provider='twitter') }}"
+               class="btn btn-social btn-twitter btn-primary btn-lg">
+                <i class="fa fa-twitter"></i> Sign in with Twitter
             </a>
 
         </div>
