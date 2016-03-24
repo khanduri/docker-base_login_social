@@ -1,0 +1,17 @@
+#feedback {
+    position: fixed;
+    top: calc(30% - 0px);
+}
+
+#feedback a {
+    background: #df691a;
+    box-shadow: 0 0 3px rgba(0, 0, 0, .7);
+    border: 2px solid #fff;
+    display: block;
+    padding: 20px 12px;
+}
+
+#feedback a:hover {
+    padding-right: 20px;
+}
+

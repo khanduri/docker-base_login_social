@@ -1,0 +1,19 @@
+{
+  "name": "base_login_social",
+  "version": "1.0.0",
+  "description": "- virtualenv virenv --no-site-packages  - source virenv/bin/activate  - open up postgres cmd shell    - create db    - \\l: list all databases    - \\c: connect to the data base    - \\dt: list all tables under the connected database  - python manage.py db init  - python manage.py db upgrade  - python manage.py db migrate",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khanduri/base_login_social.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/khanduri/base_login_social/issues"
+  },
+  "homepage": "https://github.com/khanduri/base_login_social#readme"
+}

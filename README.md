@@ -41,3 +41,5 @@ export HASHIDS_SALT=''
  - Have celery running: `celery -A app.celery worker`
 
 
+npm init
+npm install
