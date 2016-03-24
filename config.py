@@ -1,8 +1,10 @@
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
+dirname = os.path.split(os.path.dirname(__file__))[-1]
 
-
-SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', 'sqlite:///' + os.path.join(basedir, 'app.db'))
+local_db = 'postgresql://localhost/{0}_db'.format(dirname)
+print 'LOCAL DB setup in: {0}'.format(local_db)
+SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', local_db)
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 
 

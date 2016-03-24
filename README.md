@@ -2,6 +2,14 @@
 
  - virtualenv virenv --no-site-packages
  - source virenv/bin/activate
+ - open up postgres cmd shell
+   - create db
+   - \l: list all databases
+   - \c: connect to the data base
+   - \dt: list all tables under the connected database
+ - python manage.py db init
+ - python manage.py db upgrade
+ - python manage.py db migrate
 
 
 Dev Setup:
