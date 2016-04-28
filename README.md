@@ -1,15 +1,25 @@
 
-
  - virtualenv virenv --no-site-packages
- - source virenv/bin/activate
+     - source virenv/bin/activate
  - open up postgres cmd shell
    - create db
    - \l: list all databases
    - \c: connect to the data base
    - \dt: list all tables under the connected database
- - python manage.py db init
- - python manage.py db upgrade
- - python manage.py db migrate
+ - Setup postgres:
+    - python manage.py db init
+    - python manage.py db upgrade
+    - python manage.py db migrate
+ - Start Celery up:
+    - celery -A app.celery worker
+ - Start redis server up:
+    - redis-server
+
+
+ - Starting up the application server: `./run.py`
+ - Have redis running: `redis-server` # make sure to have redis installed
+ - Have celery running: `celery -A app.celery worker`
+
 
 
 Dev Setup:
@@ -34,12 +44,8 @@ export SENDGRID_API_KEY=''
 
 
 export HASHIDS_SALT=''
+export SERVER_NAME=''
 ```
-
- - Starting up the application server: `./run.py`
- - Have redis running: `redis-server` # make sure to have redis installed
- - Have celery running: `celery -A app.celery worker`
-
 
 npm init
 npm install
