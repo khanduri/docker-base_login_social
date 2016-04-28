@@ -1,0 +1,23 @@
+<!-- extend base layout -->
+{% extends "email/base.html" %}
+
+{% block content %}
+
+
+    <table cellpadding="0" cellspacing="0" border="0" align="center">
+        <tr>
+            <td>
+                <h3>Complete Pulsico Signup:</h3>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top" style="vertical-align: top;" width="600" >
+                <div>Please click <a href="{{ url_for('verify_email_page', **link_data) }}">here</a></div>
+                &nbsp;
+                <div>OR</div>
+                &nbsp;
+                <div>copy past the following link: {{ url_for('verify_email_page', **link_data)  }}</div>
+            </td>
+        </tr>
+    </table>
+{% endblock %}

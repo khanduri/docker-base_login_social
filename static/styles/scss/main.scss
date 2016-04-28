@@ -1,10 +1,11 @@
 #feedback {
     position: fixed;
     top: calc(30% - 0px);
+    right: 0;
 }
 
 #feedback a {
-    background: #df691a;
+    background: #ff9800;
     box-shadow: 0 0 3px rgba(0, 0, 0, .7);
     border: 2px solid #fff;
     display: block;
@@ -15,3 +16,25 @@
     padding-right: 20px;
 }
 
+
+.form-inline .form-control {
+    width: 100%;
+}
+
+footer {
+    padding-bottom: 40px;
+}
+
+.team-member-pic {
+    width: 128px;
+    height: 128px;
+}
+
+#reminder-list li hr {
+    border: 0;
+    border-bottom: 1px dashed #EEE;
+}
+
+.reminder-note {
+    font-size: larger;
+}

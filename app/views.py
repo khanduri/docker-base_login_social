@@ -5,12 +5,11 @@ from flask import (
     request,
     g,
 )
-from app import app, db, controllers
-from app.forms import (
-    LoginForm,
-    EditForm,
-    ContactForm,
-)
+from app import app
+from app import db
+from app import controllers
+from app import tasks
+from app import forms
 from flask.ext.login import (
     login_user,
     logout_user,
@@ -20,37 +19,15 @@ from flask.ext.login import (
 from oauth import OAuthSignIn
 from app import tables
 from datetime import datetime
-from app.tasks import send_sample_email
-from flask_admin.contrib.sqla import ModelView
-from flask_admin import AdminIndexView
 
 
-class _AdminMixin(object):
-
-    def is_accessible(self):
-        if not current_user:
-            return False
-        return current_user.is_admin() if hasattr(current_user, 'is_admin') else False
-
-    def inaccessible_callback(self, name, **kwargs):
-        return redirect('/index')
-
-
-class AdminAccessIndexView(_AdminMixin, AdminIndexView):
-    pass
-
-
-class AdminAccessView(_AdminMixin, ModelView):
-    pass
-
-
-def _get_template_config():
+def _get_template_config(title='Home'):
 
     class Config(object):
         pass
 
     config = Config()
-    config.title = 'Home'
+    config.title = title
     config.bootswatch_template = app.config.get('BOOTSWATCH_TEMPLATE')
 
     return config
@@ -59,21 +36,8 @@ def _get_template_config():
 @app.route('/')
 @app.route('/index')
 def index_page():
-    user = {'nickname': 'Prashant'}
-    posts = [
-        {
-            'author': {'nickname': 'John'},
-            'body': 'Beautiful day in Portland!'
-        },
-        {
-            'author': {'nickname': 'Susan'},
-            'body': 'The Avengers movie was so cool!'
-        }
-    ]
     return render_template('index.html',
                            config=_get_template_config(),
-                           posts=posts,
-                           user=user,
                            current_user=current_user)
 
 
@@ -96,27 +60,33 @@ def user_page(nickname):
 
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
-def profile():
-    form = EditForm()
+def profile_page():
+    form = forms.ProfileForm()
     if form.validate_on_submit():
-        g.user.nickname = form.nickname.data
-        g.user.about_me = form.about_me.data
-        db.session.add(g.user)
-        db.session.commit()
+
+        send_verification_mail = True if g.user.email != form.email.data else False
+
+        controllers.UserController.update_user_profile(g.user.xid,
+                                                       form.nickname.data,
+                                                       form.email.data,
+                                                       form.timezone.data,
+                                                       form.about_me.data)
+
+        if send_verification_mail:
+            tasks.send_email_verification_link.apply_async((g.user.xid, ))
+
         flash('Your changes have been saved.')
         return redirect('/profile')
 
-    form.nickname.data = g.user.nickname
-    form.about_me.data = g.user.about_me
-
     return render_template('edit.html',
                            config=_get_template_config(),
-                           form=form)
+                           form=form,
+                           user=g.user)
 
 
 @app.route('/contact', methods=['GET', 'POST'])
-def contact():
-    form = ContactForm()
+def contact_page():
+    form = forms.ContactForm()
 
     if request.method == 'POST':
         if not form.validate():
@@ -142,6 +112,24 @@ def contact():
                                form=form)
 
 
+@app.route('/about')
+def about_page():
+    return render_template('about.html',
+                           config=_get_template_config())
+
+
+@app.route('/story')
+def story_page():
+    return render_template('story.html',
+                           config=_get_template_config())
+
+
+@app.route('/<path:path>')
+def missing(path=None):
+    return render_template('missing.html',
+                           config=_get_template_config())
+
+
 @app.before_request
 def before_request():
     g.user = current_user
@@ -155,8 +143,8 @@ def before_request():
 # Website Login
 ########################################################
 @app.route('/login', methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
+def login_page():
+    form = forms.LoginForm()
     if form.validate_on_submit():
         flash('Login requested for OpenID="%s", remember_me=%s' %
               (form.openid.data, str(form.remember_me.data)))
@@ -169,15 +157,28 @@ def login():
 
 
 @app.route('/logout')
-def logout():
+def logout_page():
     logout_user()
     return redirect('/index')
 
 
-@app.route('/send_email')
-def send_email():
-    send_sample_email.apply_async()
-    return redirect('/index')
+def _validate_user(user_xid):
+    "DUPE"
+    user = g.user if g.user.is_authenticated else None
+    request_user_id = tables.User.id_from_xid(user_xid)
+    return user.id == request_user_id
+
+
+@app.route('/verify/<user_xid>/<verification_token>')
+@login_required
+def verify_email_page(user_xid, verification_token):
+
+    if not _validate_user(user_xid):
+        return render_template('verify.html', verified=False)
+
+    user = controllers.UserController.update_user_email_verification(user_xid, verification_token)
+    verified = user.email_verification_token is None
+    return render_template('verify.html', verified=verified)
 
 
 ########################################################
@@ -230,3 +231,30 @@ def oauth_callback(provider):
 
     login_user(user, True)
     return redirect('/index')
+
+
+########################################################
+# Template samples
+########################################################
+@app.route('/email/template/<key>')
+def email_templates(key):
+
+    email_data = {
+    }.get(key)
+
+    if not email_data:
+        return render_template('missing.html',
+                               config=_get_template_config())
+
+    template_name, template_kwargs = email_data
+    return render_template(template_name, **template_kwargs)
+
+
+##############################
+# TODO: sample to show async flow
+@app.route('/send_email')
+@login_required
+def send_email_page():
+    tasks.send_sample_email.apply_async()
+    return redirect('/index')
+

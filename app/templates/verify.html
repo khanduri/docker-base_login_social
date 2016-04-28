@@ -1,0 +1,25 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="container-fluid">
+        <div class="col-md-10">
+            <h2>Verification</h2>
+            <hr>
+            <div class="container">
+                {% if verified %}
+                    <span class="alert alert-success">
+                Your email has been verified. Thank you!
+            </span>
+                {% else %}
+                    <span class="alert alert-danger">
+                Something went wrong. Please try again to verify the link.
+            </span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

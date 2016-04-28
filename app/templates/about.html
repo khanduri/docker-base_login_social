@@ -1,0 +1,81 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="container">
+        <h3>How it works</h3>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <img src="http://placehold.it/512x512?text=Step">
+                    <div class="caption">
+                        <h4 class="text-uppercase">Step 1</h4>
+                        <p>Desc of Step</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <img src="http://placehold.it/512x512?text=Step">
+                    <div class="caption">
+                        <h4 class="text-uppercase">Step 2</h4>
+                        <p>Desc of Step</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <img src="http://placehold.it/512x512?text=Step">
+                    <div class="caption">
+                        <h4 class="text-uppercase">Step 3</h4>
+                        <p>Desc of Step</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <div class="container">
+        <h3>Team</h3>
+
+        <div class="media">
+            <div class="media-left">
+                <img class="media-object team-member-pic"
+                     src="{{ url_for('static', filename='img/128_prashant.jpg') }}"
+                     data-holder-rendered="true">
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading">Prashant Khanduri</h4>
+                <ul class="list-inline banner-social-buttons">
+                    <li><a href="https://twitter.com/khandurip" class="btn btn-default btn-sm"><i class="fa fa-twitter fa-fw"></i></a></li>
+                    <li><a href="https://github.com/khanduri" class="btn btn-default btn-sm"><i class="fa fa-github fa-fw"></i></a></li>
+                    <li><a href="https://www.linkedin.com/in/prashantkhanduri" class="btn btn-default btn-sm"><i class="fa fa-linkedin fa-fw"></i></a></li>
+                    <li><a href="https://www.facebook.com/prashant.khanduri" class="btn btn-default btn-sm"><i class="fa fa-facebook fa-fw"></i></a></li>
+                </ul>
+                <p>Entrepreneur | Hacker | Obsessive Learner | Weekend runner | Tennis enthusiast</p>
+            </div>
+
+            <div class="media-left">
+                <img class="media-object team-member-pic"
+                     src="http://placehold.it/128x128?text=You?"
+                     data-holder-rendered="true">
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading">Join Us!</h4>
+                <p>Lets work together to make this project better</p>
+            </div>
+
+        </div>
+
+        <div class="container well">
+            <p>We're always looking for more folks to contribute. If you'd like to help, please <a href="/contact">reach out</a>!</p>
+        </div>
+
+    </div>
+
+{% endblock %}

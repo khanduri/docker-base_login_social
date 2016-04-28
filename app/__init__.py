@@ -18,25 +18,25 @@ celery.conf['CELERY_IMPORTS'] = (
 
 db = SQLAlchemy(app)
 lm = LoginManager(app)
-lm.login_view = 'index'
+lm.login_view = 'index_page'
 
 sg = SendGridClient(app.config['SENDGRID_USER'], app.config['SENDGRID_API_KEY'])
 
 hashids = Hashids(salt=app.config.get('HASHIDS_SALT'), min_length=8)
 
 
-from app import views, tables
+from app import views, tables, admins, apis
 
 
-class UserView(views.AdminAccessView):
-        can_delete = False
+class LockedView(admins.AdminAccessView):
+    can_delete = False
 
 
-class PostView(views.AdminAccessView):
-        page_size = 50
+class EditableView(admins.AdminAccessView):
+    page_size = 50
 
 
-admin = Admin(app, name='Admin Home', template_mode='bootstrap3', index_view=views.AdminAccessIndexView())
-admin.add_view(UserView(tables.User, db.session))
-admin.add_view(UserView(tables.UserSocial, db.session))
-admin.add_view(PostView(tables.Post, db.session))
+admin = Admin(app, name='Admin Home', template_mode='bootstrap3', index_view=admins.AdminAccessIndexView())
+admin.add_view(LockedView(tables.User, db.session))
+admin.add_view(LockedView(tables.UserSocial, db.session))
+admin.add_view(EditableView(tables.Contact, db.session))

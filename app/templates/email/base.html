@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Hello from Pulsico</title>
+
+    <style type="text/css">
+        #outlook a {padding:0;}
+        body {color: #49644a; }
+        p {margin: 0; padding: 0; font-size: 0px; line-height: 0px; }
+        table td {border-collapse: collapse; }
+        table {border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; }
+        img {display: block; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; }
+        a img {border: none; }
+        a {text-decoration: none;  color: #409436; }
+        a:hover {text-decoration: underline }
+        span {font-size: 13px; line-height: 17px; font-family: monospace; color: #646464; }
+    </style>
+    <!--[if gte mso 9]>
+  <style>
+  /* Target Outlook 2007 and 2010 */
+  </style>
+    <![endif]-->
+
+</head>
+<body style="width:100%; margin:0; padding:0; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; background: #b2dba1">
+
+<table cellpadding="0" cellspacing="0" border="0" style="margin:0; padding:0; width:100%; line-height: 100% !important;">
+    <tr>
+        <td valign="top">
+            <table cellpadding="0" cellspacing="0" border="0" align="center" width="600" style="background: #ffffff;">
+                <!-- EMAIL-HEADER-->
+                <tr>
+                    <td valign="top" style="vertical-align: top;">
+                        <a href="{{ url_for('index_page', _external=True) }}">
+                        <img src="{{ url_for('static', filename='img/pulsico.png') }}" alt="alt text" title="title text" width="224" height="78" style="width: 224px; height: 78px;"/>
+                        </a>
+                    </td>
+                </tr>
+
+                <!-- EMAIL-BODY-->
+                <tr>
+                    <td valign="top">
+                        <table cellpadding="0" cellspacing="0" border="0" align="center" width="560" style="background: #FFFFFF;">
+                            <tr>
+                                <td valign="top" style="vertical-align: top;">
+
+                                    <!-- BODY-HEADER -->
+                                    <table cellpadding="0" cellspacing="0" border="0" align="center">
+                                        <tr>
+                                            <td valign="top" style="vertical-align: top;">
+                                                <span style=""></span>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                    <hr>
+
+                                    <!-- BODY-CONTENT -->
+                                    {% block content %}{% endblock %}
+
+                                    <hr>
+
+                                    <!-- BODY-FOOTER -->
+                                    <table cellpadding="0" cellspacing="0" border="0" align="center">
+                                        <tr>
+                                            <td valign="top" style="vertical-align: top;">
+                                                <span style=""></span>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- EMAIL-FOOTER-->
+                <tr>
+                    <td valign="top" style="text-align: center">
+                        <table cellpadding="0" cellspacing="0" border="0" align="center" width="560" style="background: #FFFFFF;">
+                            <tr>
+                                <td valign="top" style="vertical-align: top;">
+                                    © 2016 Okaaru, Inc
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign="top" style="vertical-align: top;">
+                            <span>
+                                <a href="{{ url_for('index_page', _external=True) }}">Home</a>
+                                &nbsp;&nbsp;|&nbsp;&nbsp;
+                                <a href="{{ url_for('about', _external=True) }}">About</a>
+                                &nbsp;&nbsp;|&nbsp;&nbsp;
+                                <a href="{{ url_for('contact', _external=True) }}">Contact</a>
+                            </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+</table>
+
+
+</body>
+</html>

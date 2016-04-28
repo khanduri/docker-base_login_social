@@ -7,16 +7,36 @@
         <div class="col-md-8">
             <h2>Edit Your Profile</h2>
 
-            <form action="{{ url_for('profile') }}" method="post" name="edit">
+            <form action="{{ url_for('profile_page') }}" method="post" name="edit">
                 {{ form.hidden_tag() }}
 
                 <div class="form-group">
                     <label for="nickname">Your nickname:</label>
-                    <input type="text" class="form-control" name="nickname" id="nickname">
+                    <input type="text" class="form-control" name="nickname" id="nickname" value="{{ user.nickname }}">
                 </div>
                 <div class="form-group">
-                    <label for="about_me">About yourself:</label>
-                    <textarea class="form-control" name="about_me" id="about_me"></textarea>
+                    <label for="email">Email: &nbsp;</label>
+                    {% if user %}
+                        {% if user.email %}
+                            {% if user.email_verified %}
+                                <span class="label label-success">Verified</span>
+                            {% else %}
+                                <span class="label label-warning">Unverified</span>
+                                <button id="verification-link" data-user-xid="{{ user.xid }}" class="btn btn-warning btn-sm">Resend Verification link</button>
+                                <span id="verification-update" class="hidden label label-success">Verification resent. Please check your email inbox AND spam folder as well! </span>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                    <input type="text" class="form-control" name="email" id="email" value="{{ user.email }}">
+                </div>
+                <div class="form-group">
+                    <label for="timezone">Timezone:</label>
+                    {% if user.timezone %} <b>Last saved - {{ user.timezone }}</b> {% endif %}
+                    <select class="form-control" name="timezone" id="timezone"></select>
+                </div>
+                <div class="form-group">
+                    <label for="about_me">About yourself [optional]:</label>
+                    <textarea class="form-control" name="about_me" id="about_me">{% if user.about_me %}{{ user.about_me }}{% endif %}</textarea>
                 </div>
                 <button type="submit" class="btn btn-success btn-default">Submit</button>
             </form>
@@ -24,4 +44,24 @@
         </div>
     </div>
 
+{% endblock %}
+
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='scripts/js/timezones.full.js') }}"></script>
+
+    <script>
+        $('#timezone').timezones();
+
+        $('#verification-link').click(function(e){
+            e.preventDefault();
+
+            var user_xid = $(this).attr('data-user-xid');
+            $.post('api/v1/users/' + user_xid + '/resend_verify', {},  function(){
+                $('#verification-link').addClass('hidden');
+                $('#verification-update').removeClass('hidden');
+            });
+
+        });
+    </script>
 {% endblock %}
