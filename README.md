@@ -49,3 +49,4 @@ export SERVER_NAME=''
 
 npm init
 npm install
+export PYTHONPATH=/Users/prashantkhanduri/projects/flask/base_login_social
