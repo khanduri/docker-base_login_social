@@ -47,3 +47,5 @@ SENDGRID_USER = os.environ['SENDGRID_USER']
 SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
 
 HASHIDS_SALT = os.environ['HASHIDS_SALT']
+
+SERVER_NAME = os.environ['SERVER_NAME']
