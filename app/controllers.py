@@ -90,4 +90,3 @@ class ContactController(object):
         db.session.commit()
 
         return contact
-

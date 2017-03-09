@@ -21,5 +21,3 @@ class AdminAccessIndexView(_AdminMixin, AdminIndexView):
 
 class AdminAccessView(_AdminMixin, ModelView):
     pass
-
-
