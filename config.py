@@ -1,9 +1,7 @@
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 dirname = os.path.split(os.path.dirname(__file__))[-1]
-
 local_db = 'postgresql://localhost/{0}_db'.format(dirname)
-print 'LOCAL DB setup in: {0}'.format(local_db)
 
 
 SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', local_db)
@@ -21,10 +19,9 @@ BOOTSWATCH_TEMPLATE_LIST = [
     "spacelab", "simplex", "lumen",
     "flatly", "journal", "cyborg",
 ]
+# import random
+# BOOTSWATCH_TEMPLATE = BOOTSWATCH_TEMPLATE_LIST[random.randint(0, len(BOOTSWATCH_TEMPLATE_LIST) - 1)]
 BOOTSWATCH_TEMPLATE = BOOTSWATCH_TEMPLATE_LIST[8]
-import random
-# BOOTSWATCH_TEMPLATE = BOOTSWATCH_TEMPLATE_LIST[random.randint(0, len(BOOTSWATCH_TEMPLATE_LIST) -1)]
-print BOOTSWATCH_TEMPLATE
 
 
 OAUTH_CREDENTIALS = {
@@ -49,3 +46,14 @@ SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
 HASHIDS_SALT = os.environ['HASHIDS_SALT']
 
 SERVER_NAME = os.environ['SERVER_NAME']
+
+
+# Print the setup
+output_strings = [
+    'LOCAL DB setup in: {0}'.format(local_db),
+    BOOTSWATCH_TEMPLATE,
+    SERVER_NAME,
+]
+
+for output_string in output_strings:
+    print output_string

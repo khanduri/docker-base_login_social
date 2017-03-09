@@ -1,0 +1,4 @@
+
+
+class AppTestSuiteBase(object):
+    pass

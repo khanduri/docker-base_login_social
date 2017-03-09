@@ -1,4 +1,39 @@
 
+
+How to clone this repo for a new project:
+====
+
+
+Prerequisites:
+----
+ - virtualenv
+ - postgres
+ - celery
+ - redis
+
+
+Running the service:
+----
+ - Starting up the application server: `./run.py`
+ - Have redis running: `redis-server` # make sure to have redis installed
+ - Have celery running: `celery -A app.celery worker`
+
+
+Setup:
+====
+
+
+Services to register for:
+----
+ - Facebook
+ - Twitter
+ - Sendgrid
+
+
+
+
+Steps:
+----
  - virtualenv virenv --no-site-packages
      - source virenv/bin/activate
  - open up postgres cmd shell
@@ -16,13 +51,9 @@
     - redis-server
 
 
- - Starting up the application server: `./run.py`
- - Have redis running: `redis-server` # make sure to have redis installed
- - Have celery running: `celery -A app.celery worker`
 
 
-
-Dev Setup:
+Random notes (The following section is what I have to cleanup):
 ----
 
 TODO: Initial install and setup for pip

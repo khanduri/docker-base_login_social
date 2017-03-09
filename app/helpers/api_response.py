@@ -1,7 +1,7 @@
 from flask import g
 from flask import jsonify
 
-import tables
+from app import tables
 
 
 def _pack_response(data, meta=None):
