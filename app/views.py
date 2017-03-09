@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import (
     render_template,
     flash,
@@ -16,9 +18,8 @@ from flask.ext.login import (
     current_user,
     login_required,
 )
-from oauth import OAuthSignIn
+from app.helpers.oauth import OAuthSignIn
 from app import tables
-from datetime import datetime
 
 
 def _get_template_config(title='Home'):
