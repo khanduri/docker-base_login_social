@@ -41,15 +41,15 @@ hashids = Hashids(salt=app.config.get('HASHIDS_SALT'), min_length=8)
 from app import views, tables, admins, apis  # noqa: E402,F401
 
 
-class LockedView(admins.AdminAccessView):
+class LockedModelView(admins.AdminAccessModelView):
     can_delete = False
 
 
-class EditableView(admins.AdminAccessView):
+class EditableModelView(admins.AdminAccessModelView):
     page_size = 50
 
 
 admin = Admin(app, name='Admin Home', template_mode='bootstrap3', index_view=admins.AdminAccessIndexView())
-admin.add_view(LockedView(tables.User, db.session))
-admin.add_view(LockedView(tables.UserSocial, db.session))
-admin.add_view(EditableView(tables.Contact, db.session))
+admin.add_view(LockedModelView(tables.User, db.session))
+admin.add_view(LockedModelView(tables.UserSocial, db.session))
+admin.add_view(EditableModelView(tables.Contact, db.session))
