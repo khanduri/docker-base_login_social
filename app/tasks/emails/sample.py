@@ -1,8 +1,8 @@
-from app.tasks.base import app_context_task
 from app.tasks.emails import base
+from app import celery
 
 
-@app_context_task
+@celery.task()
 def send_sample_email():
     send_to = "prashant.khanduri@gmail.com"
     send_from = "prashant.khanduri@gmail.com"

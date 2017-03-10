@@ -1,10 +1,10 @@
 from app import controllers
-from app.tasks.base import app_context_task
 from app.tasks.emails import base
 from flask import render_template
+from app import celery
 
 
-@app_context_task
+@celery.task()
 def send_email_verification_link(user_xid):
 
     user = controllers.UserController.fetch_user(user_xid)
