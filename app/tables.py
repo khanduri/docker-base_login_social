@@ -61,7 +61,7 @@ class User(db.Model, UserMixin, BaseDBMixin):
         return '<User xid:{} - nickname:{}>'.format(self.xid, self.nickname)
 
     def is_admin(self):
-        return self.email == 'prashant.khanduri@gmail.com' and self.email_verified
+        return self.id == 1
 
     def avatar(self, size):
         md_hash = md5(self.email.encode('utf-8')).hexdigest()

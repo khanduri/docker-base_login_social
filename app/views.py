@@ -240,7 +240,12 @@ def oauth_callback(provider):
 @app.route('/email/template/<key>')
 def email_templates(key):
 
+    fake_verify_link_data = {'link_data': {'user_xid': 'fake_xid',
+                                           'verification_token': 'FAKE_LINK_TOKEN',
+                                           '_external': True,}}
+
     email_data = {
+        'email_verify': ("email/email_verification.html", fake_verify_link_data),
     }.get(key)
 
     if not email_data:
