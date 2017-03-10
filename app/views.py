@@ -180,8 +180,7 @@ def verify_email_page(user_xid, verification_token):
         return render_template('verify.html', verified=False)
 
     user = controllers.UserController.update_user_email_verification(user_xid, verification_token)
-    verified = user.email_verification_token is None
-    return render_template('verify.html', verified=verified)
+    return render_template('verify.html', verified=user.email_verified)
 
 
 ########################################################

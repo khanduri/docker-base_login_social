@@ -11,7 +11,7 @@ class UserController(object):
 
     @classmethod
     def fetch_all_users(cls, user_ids):
-        users = tables.User.query.filter(tables.User.id.in_(user_ids))
+        users = tables.User.query.filter(tables.User.id.in_(user_ids)).all()
         return users
 
     @classmethod
@@ -53,6 +53,7 @@ class UserController(object):
         if user.email != email:
             user.email = email
             user.email_verification_token = uuid.uuid4().hex
+            user.email_verified = False
 
         db.session.add(user)
         db.session.commit()
@@ -64,7 +65,7 @@ class UserController(object):
         user = cls.fetch_user(user_xid)
 
         if user.email_verification_token == verification_token:
-            user.email_verification_token = None
+            user.email_verified = True
             db.session.add(user)
             db.session.commit()
 
@@ -84,12 +85,9 @@ class UserController(object):
     def create_user_and_social_details(cls, username, email, social_network, social_id, access_code):
         pass
 
-
-class UserSocialController(object):
-
     @classmethod
-    def fetch_user_social(cls, social_id):
-        return tables.UserSocial.query.filter_by(social_id=social_id).first()
+    def fetch_user_social(cls, user_id):
+        return tables.UserSocial.query.filter_by(user_id=user_id).one()
 
 
 class ContactController(object):

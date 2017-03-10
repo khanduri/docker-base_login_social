@@ -1,4 +1,5 @@
+import unittest
 
 
-class AppTestSuiteBase(object):
+class AppTestSuiteBase(unittest.TestCase):
     pass

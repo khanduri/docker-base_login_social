@@ -26,7 +26,7 @@ class BaseDBMixin(object):
     id = db.Column(db.Integer, primary_key=True)
     created = db.Column(db.TIMESTAMP, server_default=func.now())
     removed_at = db.Column(db.TIMESTAMP)
-    # updated = db.Column(db.TIMESTAMP, server_default=func.now(), onupdate=func.current_timestamp())
+    updated = db.Column(db.TIMESTAMP, server_default=func.now(), onupdate=func.current_timestamp())
 
     @property
     def xid(self):
@@ -42,26 +42,24 @@ class User(db.Model, UserMixin, BaseDBMixin):
 
     __tablename__ = 'User'
 
-    email = db.Column(db.String(255), nullable=True)
+    email = db.Column(db.String(255))
     last_seen = db.Column(db.DateTime)
-    nickname = db.Column(db.String(63), nullable=False)
+    nickname = db.Column(db.String(63))
     about_me = db.Column(db.String(1023))
     timezone = db.Column(db.String(255))
     email_verification_token = db.Column(db.String(1023), default=uuid.uuid4().hex)
+    admin = db.Column(db.Boolean, default=False)
+    email_verified = db.Column(db.Boolean, default=False)
 
     __table_args__ = (
-        UniqueConstraint('email', 'email_verification_token', 'removed_at'),
+        UniqueConstraint('email', 'removed_at'),
     )
-
-    @property
-    def email_verified(self):
-        return self.email_verification_token is None
 
     def __repr__(self):
         return '<User xid:{} - nickname:{}>'.format(self.xid, self.nickname)
 
     def is_admin(self):
-        return self.id == 1
+        return self.id == 1 or self.admin
 
     def avatar(self, size):
         md_hash = md5(self.email.encode('utf-8')).hexdigest()
