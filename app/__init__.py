@@ -25,7 +25,7 @@ sg = SendGridClient(app.config['SENDGRID_USER'], app.config['SENDGRID_API_KEY'])
 hashids = Hashids(salt=app.config.get('HASHIDS_SALT'), min_length=8)
 
 
-from app import views, tables, admins, apis
+from app import views, tables, admins, apis  # noqa: E402,F401
 
 
 class LockedView(admins.AdminAccessView):

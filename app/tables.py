@@ -107,4 +107,3 @@ class Contact(db.Model, BaseDBMixin):
     email = db.Column(db.String(63), nullable=True)
     name = db.Column(db.String(255), nullable=True)
     message = db.Column(db.String(1023))
-

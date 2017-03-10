@@ -9,9 +9,8 @@ manager = Manager(app)
 manager.add_command('db', MigrateCommand)
 
 
-from app.tables import User
+from app.tables import User  # noqa: E402
 
 
 if __name__ == '__main__':
     manager.run()
-

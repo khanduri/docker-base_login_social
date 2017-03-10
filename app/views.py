@@ -12,8 +12,9 @@ from app import (
     controllers,
     db,
     forms,
-    tasks,
 )
+from app.tasks.emails.verification_email import send_email_verification_link
+from app.tasks.emails.sample import send_sample_email
 from flask.ext.login import (
     login_user,
     logout_user,
@@ -75,7 +76,7 @@ def profile_page():
                                                        form.about_me.data)
 
         if send_verification_mail:
-            tasks.send_email_verification_link.apply_async((g.user.xid, ))
+            send_email_verification_link.apply_async((g.user.xid, ))
 
         flash('Your changes have been saved.')
         return redirect('/profile')
@@ -227,7 +228,7 @@ def email_templates(key):
 
     fake_verify_link_data = {'link_data': {'user_xid': 'fake_xid',
                                            'verification_token': 'FAKE_LINK_TOKEN',
-                                           '_external': True,}}
+                                           '_external': True}}
 
     email_data = {
         'email_verify': ("email/email_verification.html", fake_verify_link_data),
@@ -246,6 +247,5 @@ def email_templates(key):
 @app.route('/send_email')
 @login_required
 def send_email_page():
-    tasks.send_sample_email.apply_async()
+    send_sample_email.apply_async()
     return redirect('/index')
-

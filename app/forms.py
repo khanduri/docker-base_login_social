@@ -17,5 +17,5 @@ class ProfileForm(Form):
 
 class ContactForm(Form):
     name = StringField("Name")
-    email = StringField("Email",  [Email("Please enter your email address.")])
-    message = TextAreaField("Message",  [DataRequired("Please enter a message.")])
+    email = StringField("Email", [Email("Please enter your email address.")])
+    message = TextAreaField("Message", [DataRequired("Please enter a message.")])
