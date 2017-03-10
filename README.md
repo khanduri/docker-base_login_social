@@ -64,7 +64,7 @@
     - trigger an email:
         - http://localhost:5454/send_email
     - template email:
-        - http://localhost:5454/email/template/email_verify
+        - http://localhost:5454/email/templates/email_verify
 
 
 ## Cleanup to add in your custom logic

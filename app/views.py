@@ -1,5 +1,6 @@
 from datetime import datetime
 
+
 from flask import (
     render_template,
     flash,
@@ -13,6 +14,8 @@ from app import (
     db,
     forms,
 )
+from app.helpers.oauth import OAuthSignIn
+from app.helpers.email import EMAIL_TEMPLATE_MAP
 from app.tasks.emails.verification_email import send_email_verification_link
 from app.tasks.emails.sample import send_sample_email
 from flask.ext.login import (
@@ -21,7 +24,6 @@ from flask.ext.login import (
     current_user,
     login_required,
 )
-from app.helpers.oauth import OAuthSignIn
 
 
 def _get_template_config(title='Home'):
@@ -222,22 +224,24 @@ def oauth_callback(provider):
 ########################################################
 # Template samples
 ########################################################
-@app.route('/email/template/<key>')
-def email_templates(key):
+@app.route('/email/templates')
+def email_templates():
+    template_keys = [k for k,v in EMAIL_TEMPLATE_MAP.iteritems()]
+    return render_template('template_listing.html',
+                           template_keys=template_keys,
+                           config=_get_template_config())
 
-    fake_verify_link_data = {'link_data': {'user_xid': 'fake_xid',
-                                           'verification_token': 'FAKE_LINK_TOKEN',
-                                           '_external': True}}
 
-    email_data = {
-        'email_verify': ("email/email_verification.html", fake_verify_link_data),
-    }.get(key)
+@app.route('/email/templates/<key>')
+def email_template(key):
+    email_data = EMAIL_TEMPLATE_MAP.get(key)
 
     if not email_data:
         return render_template('missing.html',
                                config=_get_template_config())
 
     template_name, template_kwargs = email_data
+    template_kwargs['config'] = _get_template_config()
     return render_template(template_name, **template_kwargs)
 
 

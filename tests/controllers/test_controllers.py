@@ -48,9 +48,5 @@ class UserControllerTestSuite(AppTestSuiteBase):
         self.assertFalse(u1.email_verified)
 
 
-class UserSocialControllerTestSuite(AppTestSuiteBase):
-    pass
-
-
 class ContactControllerTestSuite(AppTestSuiteBase):
     pass

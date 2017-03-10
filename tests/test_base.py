@@ -1,7 +1,7 @@
 from tests.base import AppTestSuiteBase
 
 
-class TestUM(AppTestSuiteBase):
+class SampleTestSuite(AppTestSuiteBase):
 
     def setup(self):
         print ("TestUM:setup() before each test method")

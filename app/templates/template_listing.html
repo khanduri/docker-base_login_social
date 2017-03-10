@@ -1,0 +1,19 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="container">
+        <h3>Email Templates:</h3>
+        <table>
+            {% for template_key in template_keys %}
+            <tr valign="top">
+                <td>
+                    <a href="/email/templates/{{ template_key }}">{{ template_key }}</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+{% endblock %}
