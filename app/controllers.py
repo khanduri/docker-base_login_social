@@ -6,12 +6,20 @@ import uuid
 class UserController(object):
 
     @classmethod
+    def id_from_xid(cls, user_xid):
+        return tables.User.id_from_xid(user_xid)
+
+    @classmethod
     def fetch_all_users(cls, user_ids):
         users = tables.User.query.filter(tables.User.id.in_(user_ids))
         return users
 
     @classmethod
-    def create_user(cls, social_id, social_network, access_code, email, username):
+    def fetch_user_with_nickname(cls, nickname):
+        return tables.User.query.filter_by(nickname=nickname).first()
+
+    @classmethod
+    def create_or_update_user(cls, social_id, social_network, access_code, email, username):
 
         user_social = tables.UserSocial.query.filter_by(social_id=social_id).first()
         if not user_social:
@@ -71,6 +79,17 @@ class UserController(object):
                 tables.User.removed_at.is_(None)) \
             .first()
         return user
+
+    @classmethod
+    def create_user_and_social_details(cls, username, email, social_network, social_id, access_code):
+        pass
+
+
+class UserSocialController(object):
+
+    @classmethod
+    def fetch_user_social(cls, social_id):
+        return tables.UserSocial.query.filter_by(social_id=social_id).first()
 
 
 class ContactController(object):

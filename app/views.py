@@ -7,11 +7,13 @@ from flask import (
     request,
     g,
 )
-from app import app
-from app import db
-from app import controllers
-from app import tasks
-from app import forms
+from app import (
+    app,
+    controllers,
+    db,
+    forms,
+    tasks,
+)
 from flask.ext.login import (
     login_user,
     logout_user,
@@ -19,7 +21,6 @@ from flask.ext.login import (
     login_required,
 )
 from app.helpers.oauth import OAuthSignIn
-from app import tables
 
 
 def _get_template_config(title='Home'):
@@ -45,7 +46,7 @@ def index_page():
 @app.route('/user/<nickname>')
 @login_required
 def user_page(nickname):
-    user = tables.User.query.filter_by(nickname=nickname).first()
+    user = controllers.UserController.fetch_user_with_nickname(nickname)
     if user is None:
         flash('User %s not found.' % nickname)
         return redirect('index')
@@ -166,7 +167,7 @@ def logout_page():
 def _validate_user(user_xid):
     "DUPE"
     user = g.user if g.user.is_authenticated else None
-    request_user_id = tables.User.id_from_xid(user_xid)
+    request_user_id = controllers.UserController.id_from_xid(user_xid)
     return user.id == request_user_id
 
 
@@ -212,23 +213,7 @@ def oauth_callback(provider):
         flash('Authentication failed.')
         return redirect('/index')
 
-    user_social = tables.UserSocial.query.filter_by(social_id=social_id).first()
-    if not user_social:
-        user = tables.User(nickname=username, email=email)
-        user_social = tables.UserSocial(social_network=social_network,
-                                        social_id=social_id,
-                                        access_code=access_code)
-        user_social.user = user
-
-        db.session.add(user)
-        db.session.add(user_social)
-
-        db.session.commit()
-    else:
-        user = tables.User.query.filter_by(id=user_social.user_id).first()
-        user_social.access_code = access_code
-        db.session.add(user_social)
-        db.session.commit()
+    user = controllers.UserController.create_or_update_user(social_id, social_network, access_code, email, username)
 
     login_user(user, True)
     return redirect('/index')
@@ -257,7 +242,7 @@ def email_templates(key):
 
 
 ##############################
-# TODO: sample to show async flow
+# SAMPLE: to show async flow
 @app.route('/send_email')
 @login_required
 def send_email_page():

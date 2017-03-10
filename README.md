@@ -1,11 +1,13 @@
 
 # How to clone this repo for a new project:
 
-## Prerequisites:
+
+## Prerequisites to install:
  - virtualenv
  - postgres
  - celery
  - redis
+
 
 ## Setting up the environment:
  - virtualenv virenv --no-site-packages
@@ -13,10 +15,10 @@
      - pip install -R requirements.txt
  - create the keys.sh file
 
+
 ## Setting up the database:
  - open up postgres cmd shell
-    - I used postgres and installed the postgres client
-    - I can log into the shell by `psql -p5432` running in localhost
+    - Log into the shell by `psql -p5432` running in localhost
     - You will have to create a database if you're connecting/ setting up for the first time
         - `CREATE DATABASE base_login_social_db;`
     - Helpful commands
@@ -27,6 +29,15 @@
     - python manage.py db init
     - python manage.py db migrate
     - python manage.py db upgrade
+
+
+## Services to register for:
+ - `cp _keys_template.sh keys.sh`
+ - Fill in the keys/tokens by signing up for the correct services
+    - Facebook: https://developers.facebook.com/apps
+    - Twitter:
+    - Sendgrid:
+
 
 ## Running the service:
  - [Shell 1] Start redis server up:
@@ -42,11 +53,6 @@
     - source keys.sh
     - `./run.py`
     - STOP after visiting the index page .. we needs to setup a few service dependencies
-
-## Services to register for:
- - Facebook
- - Twitter
- - Sendgrid
 
 
 ## Page references:
@@ -69,27 +75,6 @@
 
 # Random notes (you should not need to read the following)
 The following section is what I have to cleanup
- - source keys.sh
-```
-export SECRET_KEY='secretykey'
-
-
-export OAUTH_CREDENTIALS_FB_ID=''
-export OAUTH_CREDENTIALS_FB_SECRET=''
-
-export OAUTH_CREDENTIALS_TW_ID=''
-export OAUTH_CREDENTIALS_TW_SECRET=''
-
-
-export SENDGRID_USER=''
-export SENDGRID_API_KEY=''
-
-
-export HASHIDS_SALT='hasheykey'
-
-
-export SERVER_NAME='localhost:5454'
-```
 
 npm init
 npm install
