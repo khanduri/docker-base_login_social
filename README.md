@@ -79,3 +79,8 @@ The following section is what I have to cleanup
 npm init
 npm install
 export PYTHONPATH=/Users/prashantkhanduri/projects/flask/base_login_social
+ - `mysqld`
+ - `mysql -u root -h localhost`
+ - `create database base_login_social`
+ - `python manage.py db migrate`
+ - `python manage.py db upgrade`

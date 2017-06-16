@@ -1,6 +1,7 @@
 
 keys.sh
 
+venv
 bin/
 include/
 lib/

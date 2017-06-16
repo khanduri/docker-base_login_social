@@ -162,6 +162,7 @@ def login_page():
 
 
 @app.route('/logout')
+@login_required
 def logout_page():
     logout_user()
     return redirect('/index')
@@ -225,6 +226,7 @@ def oauth_callback(provider):
 # Template samples
 ########################################################
 @app.route('/email/templates')
+@login_required
 def email_templates():
     template_keys = [k for k,v in EMAIL_TEMPLATE_MAP.iteritems()]
     return render_template('template_listing.html',
@@ -233,6 +235,7 @@ def email_templates():
 
 
 @app.route('/email/templates/<key>')
+@login_required
 def email_template(key):
     email_data = EMAIL_TEMPLATE_MAP.get(key)
 

@@ -1,7 +1,10 @@
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 dirname = os.path.split(os.path.dirname(__file__))[-1]
-local_db = 'postgresql://localhost/{0}_db'.format(dirname)
+# local_db = 'postgresql://localhost/{0}_db'.format(dirname)
+# local_db = 'sqlite:////tmp/sqlite/{0}.db'.format(dirname)
+# local_db = 'mysql://username:password@localhost/{0}'.format(dirname)
+local_db = 'mysql://root@localhost/{0}'.format(dirname)
 
 
 SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', local_db)
@@ -50,9 +53,11 @@ SERVER_NAME = os.environ['SERVER_NAME']
 
 # Print the setup
 output_strings = [
+    '---- START: Server Details ----',
     'LOCAL DB setup in: {0}'.format(local_db),
-    BOOTSWATCH_TEMPLATE,
-    SERVER_NAME,
+    'Bootswatch template in use: %s' % BOOTSWATCH_TEMPLATE,
+    'Server name: %s' % SERVER_NAME,
+    '---- END: Server Details ----',
 ]
 
 for output_string in output_strings:

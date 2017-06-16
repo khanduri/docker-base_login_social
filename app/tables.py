@@ -52,7 +52,7 @@ class User(db.Model, UserMixin, BaseDBMixin):
     email_verified = db.Column(db.Boolean, default=False)
 
     __table_args__ = (
-        UniqueConstraint('email', 'removed_at'),
+        UniqueConstraint('email', 'removed_at', name='uix_email_rem'),
     )
 
     def __repr__(self):

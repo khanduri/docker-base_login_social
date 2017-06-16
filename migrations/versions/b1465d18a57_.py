@@ -1,13 +1,13 @@
 """empty message
 
-Revision ID: 27fb41592dbc
+Revision ID: b1465d18a57
 Revises: None
-Create Date: 2017-03-09 14:37:33.055061
+Create Date: 2017-06-15 19:26:03.680046
 
 """
 
 # revision identifiers, used by Alembic.
-revision = '27fb41592dbc'
+revision = 'b1465d18a57'
 down_revision = None
 
 from alembic import op
@@ -20,6 +20,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('created', sa.TIMESTAMP(), server_default=sa.text(u'now()'), nullable=True),
     sa.Column('removed_at', sa.TIMESTAMP(), nullable=True),
+    sa.Column('updated', sa.TIMESTAMP(), server_default=sa.text(u'now()'), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('email', sa.String(length=63), nullable=True),
     sa.Column('name', sa.String(length=255), nullable=True),
@@ -30,19 +31,23 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('created', sa.TIMESTAMP(), server_default=sa.text(u'now()'), nullable=True),
     sa.Column('removed_at', sa.TIMESTAMP(), nullable=True),
+    sa.Column('updated', sa.TIMESTAMP(), server_default=sa.text(u'now()'), nullable=True),
     sa.Column('email', sa.String(length=255), nullable=True),
     sa.Column('last_seen', sa.DateTime(), nullable=True),
-    sa.Column('nickname', sa.String(length=63), nullable=False),
+    sa.Column('nickname', sa.String(length=63), nullable=True),
     sa.Column('about_me', sa.String(length=1023), nullable=True),
     sa.Column('timezone', sa.String(length=255), nullable=True),
     sa.Column('email_verification_token', sa.String(length=1023), nullable=True),
+    sa.Column('admin', sa.Boolean(), nullable=True),
+    sa.Column('email_verified', sa.Boolean(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('email', 'email_verification_token', 'removed_at')
+    sa.UniqueConstraint('email', 'removed_at', name='uix_email_rem')
     )
     op.create_table('UserSocial',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('created', sa.TIMESTAMP(), server_default=sa.text(u'now()'), nullable=True),
     sa.Column('removed_at', sa.TIMESTAMP(), nullable=True),
+    sa.Column('updated', sa.TIMESTAMP(), server_default=sa.text(u'now()'), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('social_network', sa.String(length=63), nullable=False),
     sa.Column('social_id', sa.String(length=255), nullable=False),
