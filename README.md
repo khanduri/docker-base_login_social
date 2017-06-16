@@ -1,42 +1,43 @@
 
-# How to clone this repo for a new project:
+------------------------------
+# Local Dev (mac OSx):
 
-
-## Prerequisites to install:
+## Setup
  - virtualenv
- - postgres
+ - MySql (OLD: postgres)
  - celery
  - redis
 
-
-## Setting up the environment:
- - virtualenv virenv --no-site-packages
-     - source virenv/bin/activate
-     - pip install -R requirements.txt
- - create the keys.sh file
-
-
-## Setting up the database:
- - open up postgres cmd shell
-    - Log into the shell by `psql -p5432` running in localhost
-    - You will have to create a database if you're connecting/ setting up for the first time
-        - `CREATE DATABASE base_login_social_db;`
-    - Helpful commands
-        - \l: list all databases
-        - \c: connect to the data base
-        - \dt: list all tables under the connected database
- - Setup postgres:
-    - python manage.py db init
-    - python manage.py db migrate
-    - python manage.py db upgrade
-
-
-## Services to register for:
- - `cp _keys_template.sh keys.sh`
- - Fill in the keys/tokens by signing up for the correct services
+ - `virtualenv --no-site-packages venv`
+ - `source venv/bin/activate`
+ - `pip install -r requirements.txt`
+ - `brew install node`
+ - `npm install`
+ - `npm install -g bower`
+ - `mysqld`
+ - `mysql -u root -h localhost`
+ - `create database base_login_social`
+ - `cp _keys_template.sh keys.sh` .. and fill in the key values
     - Facebook: https://developers.facebook.com/apps
     - Twitter:
     - Sendgrid:
+
+## Debug
+ - Setup app database:
+    - `python manage.py db init`
+    - `python manage.py db migrate`
+    - `python manage.py db upgrade`
+
+## DEPRECATED
+ - Setting up the database: POSTGRES
+     - open up postgres cmd shell
+        - Log into the shell by `psql -p5432` running in localhost
+        - You will have to create a database if you're connecting/ setting up for the first time
+            - `CREATE DATABASE base_login_social_db;`
+        - Helpful commands
+            - \l: list all databases
+            - \c: connect to the data base
+           - \dt: list all tables under the connected database
 
 
 ## Running the service:
@@ -50,7 +51,9 @@
  - [Shell 3] Starting up the application server:
     - cd into the repo location
     - source virenv/bin/activate
-    - source keys.sh
+    - `bower install`
+    - `gulp build`
+    - `source keys.sh`
     - `./run.py`
     - STOP after visiting the index page .. we needs to setup a few service dependencies
 
@@ -67,20 +70,77 @@
         - http://localhost:5454/email/templates/email_verify
 
 
-## Cleanup to add in your custom logic
-    - Places to add in your company log
-    - Code to delete
-
-
 
 # Random notes (you should not need to read the following)
 The following section is what I have to cleanup
 
-npm init
-npm install
 export PYTHONPATH=/Users/prashantkhanduri/projects/flask/base_login_social
- - `mysqld`
- - `mysql -u root -h localhost`
- - `create database base_login_social`
- - `python manage.py db migrate`
- - `python manage.py db upgrade`
+
+
+
+
+------------------------------
+# Local Testing - Docker:
+
+## Setup
+ - Make sure to have docker installed
+
+## Build
+ - `docker build -t docker-khanduri .`
+ - `docker run -d --name khanduri-01 -p 5000:5000 docker-khanduri`
+
+
+------------------------------
+# Stage Push - Docker - Heroku:
+
+## Setup
+ - `heroku login`
+ - `heroku plugins:install heroku-container-registry`
+ - `heroku container:login`
+ - `heroku apps:create khanduri-staging --remote staging`
+
+## Build
+ - `heroku container:push web --remote staging`
+ - `heroku open`
+
+
+------------------------------
+# PROD Push - Docker - Heroku:
+
+## Setup
+ - `heroku apps:create khanduri --remote heroku-khanduri`
+
+## Build
+ - `heroku container:push web --remote heroku-khanduri`
+ - `heroku logs --remote heroku-khanduri`
+
+
+------------------------------
+# PROD Push - Docker - AWS:
+
+## Setup
+ - `pip install awsebcli`
+ - `eb init`
+ - `vim .elasticbeanstalk/config.yml`
+ - `eb console`
+ - `eb create`
+
+## Build
+ - `eb deploy`
+ - `eb open`
+ - `eb ssh`
+ - `gunicorn --bind 0.0.0.0:5000 wsgi`
+
+
+------------------------------
+# DEBUGGING tips:
+
+## TODO (clean these up):
+ - `docker images`
+ - `docker rmi $(docker images | grep "<none>" | awk '{print $3}')`
+ - `docker exec -ti khanduri-01 bash`
+ - `lsof -i tcp:8000`
+ - `rm -rf /Users/prashantkhanduri/Library/Containers/com.docker.docker/Data/*`
+ - `docker logs khanduri-01`
+ - `docker exec -ti khanduri-01 bash`
+

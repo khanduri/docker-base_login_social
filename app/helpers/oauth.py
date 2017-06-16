@@ -1,3 +1,4 @@
+import json
 from rauth import OAuth1Service, OAuth2Service
 from flask import current_app, url_for, request, redirect, session
 
@@ -65,11 +66,12 @@ class FacebookSignIn(OAuthSignIn):
             return None, None, None
 
         access_code = request.args['code']
-        oauth_session = self.service.get_auth_session(
-            data={'code': access_code,
-                  'grant_type': 'authorization_code',
-                  'redirect_uri': self.get_callback_url()}
-        )
+        data = {
+            'code': access_code,
+            'grant_type': 'authorization_code',
+            'redirect_uri': self.get_callback_url()
+        }
+        oauth_session = self.service.get_auth_session(data=data, decoder=json.loads)
         me = oauth_session.get('me').json()
 
         social_id = 'facebook$' + me['id']
