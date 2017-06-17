@@ -10,7 +10,7 @@ web:
         - task_queue
     volumes:
         - /usr/src/app/static
-    env_file: .env
+    env_file: .env_docker
     command: /usr/local/bin/gunicorn -w 2 -b 0.0.0.0:5454 app:app
 
 nginx:

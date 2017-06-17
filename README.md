@@ -17,10 +17,12 @@
  - `mysqld`
  - `mysql -u root -h localhost`
  - `create database base_login_social`
- - `cp _keys_template.sh keys.sh` .. and fill in the key values
+ - `cp _env_template .env_local` .. and fill in the key values
     - Facebook: https://developers.facebook.com/apps
     - Twitter:
     - Sendgrid:
+    - db info
+    - redis info
 
 ## Debug
  - Setup app database:
@@ -46,14 +48,14 @@
  - [Shell 2] Start Celery up:
     - cd into the repo location
     - source virenv/bin/activate
-    - source keys.sh
+    - `export $(cat .env | grep -v ^# | xargs)`
     - celery -A app.celery worker
  - [Shell 3] Starting up the application server:
     - cd into the repo location
     - source virenv/bin/activate
     - `bower install`
     - `gulp build`
-    - `source keys.sh`
+    - `export $(cat .env | grep -v ^# | xargs)`
     - `./run.py`
     - STOP after visiting the index page .. we needs to setup a few service dependencies
 
