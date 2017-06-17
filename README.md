@@ -57,7 +57,7 @@ Dependencies:
         - http://localhost:5454/email/templates/email_verify
 
 
-## DEPRECATED
+## -- DEPRECATED --
  - Setting up the database: POSTGRES
      - open up postgres cmd shell
         - Log into the shell by `psql -p5432` running in localhost
@@ -142,3 +142,4 @@ Dependencies:
 
 The following section is what I have to cleanup
 export PYTHONPATH=/Users/prashantkhanduri/projects/flask/base_login_social
+ - `pip install container-transform`

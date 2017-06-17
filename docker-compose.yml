@@ -56,7 +56,7 @@ worker:
         - task_queue
     volumes:
         - /usr/src/app/static
-    env_file: .env
+    env_file: .env_docker
     user: nobody
     command: celery -A app.celery worker
 
