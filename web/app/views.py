@@ -41,6 +41,7 @@ def _get_template_config(title='Home'):
 @app.route('/')
 @app.route('/index')
 def index_page():
+    app.logger.info('LOGGER: On the index page yo!')
     return render_template('index.html',
                            config=_get_template_config(),
                            current_user=current_user)
