@@ -36,14 +36,14 @@ Dependencies:
  - [Shell 2] Start Celery up:
     - `source virenv/bin/activate`
     - `cd code`
-    - `export $(cat .env | grep -v ^# | xargs)`
+    - `export $(cat .env_local | grep -v ^# | xargs)`
     - `celery -A app.celery worker`
  - [Shell 3] Starting up the application server:
     - `source virenv/bin/activate`
     - `bower install`
     - `gulp build`
-    - `export $(cat .env | grep -v ^# | xargs)`
-    - `./run.py`
+    - `export $(cat .env_local | grep -v ^# | xargs)`
+    - `python run.py`
 
 ## Page references:
     - index:
