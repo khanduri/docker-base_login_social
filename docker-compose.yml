@@ -1,62 +1,80 @@
-web:
-    restart: always
-    build: ./code
-    expose: 
-        - "5454"
-    ports:
-        - "5454:5454"
-    links:
-        - database
-        - task_queue
-    volumes:
-        - /usr/src/app/static
-    env_file: .env_docker
-    command: /usr/local/bin/gunicorn -w 2 -b 0.0.0.0:5454 app:app
+version: '3'
 
-nginx:
-    restart: always
-    build: ./nginx
-    ports:
-        - "80:80"
-    volumes:
-        - /www/static
-    volumes_from:
-        - web
-    links:
-        - web
+volumes:
+    common-vol:
+        driver: local
 
-database:
-    restart: always
-    image: mysql:5.7
-    volumes:
-        - /var/lib/mysql
-    environment:
-        MYSQL_DATABASE: "test"
-        MYSQL_USER: "test"
-        MYSQL_PASSWORD: "test"
-        MYSQL_ROOT_PASSWORD: "root"
-        MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-    expose:
-        - "3306"
-    ports:
-        - "3306:3306"
+services:
+    web:
+        restart: always
+        build: ./code
+        expose: 
+            - "5454"
+        ports:
+            - "5454:5454"
+        links:
+            - database
+            - task_queue
+        volumes:
+            - common-vol:/usr/src/app/static
+        env_file: .env_docker
+        command: /usr/local/bin/gunicorn -w 2 -b 0.0.0.0:5454 app:app
+        networks:
+            - webnet
 
-task_queue:
-    image: redis
+    nginx:
+        restart: always
+        build: ./nginx
+        ports:
+            - "80:80"
+        volumes:
+            - common-vol:/usr/src/app/static
+            - /www/static
+        links:
+            - web
+        networks:
+            - webnet
 
-worker:
-    restart: always
-    build: ./code
-    expose: 
-        - "5455"
-    ports:
-        - "5455:5455"
-    links:
-        - database
-        - task_queue
-    volumes:
-        - /usr/src/app/static
-    env_file: .env_docker
-    user: nobody
-    command: celery -A app.celery worker
+    database:
+        restart: always
+        image: mysql:5.7
+        volumes:
+            - /var/lib/mysql
+        environment:
+            MYSQL_DATABASE: "test"
+            MYSQL_USER: "test"
+            MYSQL_PASSWORD: "test"
+            MYSQL_ROOT_PASSWORD: "root"
+            MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+        expose:
+            - "3306"
+        ports:
+            - "3306:3306"
+        networks:
+            - webnet
 
+    task_queue:
+        image: redis
+        networks:
+            - webnet
+
+    worker:
+        restart: always
+        build: ./code
+        expose: 
+            - "5455"
+        ports:
+            - "5455:5455"
+        links:
+            - database
+            - task_queue
+        volumes:
+            - /usr/src/app/static
+        env_file: .env_docker
+        user: nobody
+        command: celery -A app.celery worker
+        networks:
+            - webnet
+
+networks:
+    webnet:
