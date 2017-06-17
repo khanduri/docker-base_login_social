@@ -19,3 +19,4 @@ share/
 *whoosh_index*
 
 *node_modules*
+.env
