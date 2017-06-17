@@ -1,0 +1,39 @@
+web:
+    restart: always
+    build: ./web
+    expose: 
+        - "5454"
+    ports:
+        - "5454:5454"
+    links:
+        - mysql:mysql
+    volumes:
+        - /usr/src/app/static
+    env_file: .env
+    command: /usr/local/bin/gunicorn -w 2 -b 0.0.0.0:5454 app:app
+
+# nginx:
+#     restart: always
+#     build: ./nginx
+#     ports:
+#         - "80:80"
+#     volumes:
+#         - /www/static
+#     volumes_from:
+#         - web
+#     links:
+#         - web:web
+
+data:
+    restart: always
+    image: mysql:latest
+    volumes:
+        - /var/lib/mysql
+
+mysql:
+    restart: always
+    image: mysql:latest
+    volumes_from:
+        - data
+    ports:
+        - "3306:3306"

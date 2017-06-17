@@ -2,19 +2,20 @@
 keys.sh
 
 venv
+virenv
+
 bin/
 include/
 lib/
 .Python
 pip-selfcheck.json
 *.pyc
-.idea/*
+.idea
 app.db
 share/
 .DS_Store
 *.rdb
-virenv/
-static/bower_components/*
-whoosh_index/*
+*bower_components*
+*whoosh_index*
 
-node_modules/*
+*node_modules*

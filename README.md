@@ -144,3 +144,15 @@ export PYTHONPATH=/Users/prashantkhanduri/projects/flask/base_login_social
  - `docker logs khanduri-01`
  - `docker exec -ti khanduri-01 bash`
 
+ - `git clone https://github.com/khanduri/base_login_social.git docker-base_login_social`
+ - `virtualenv --no-site-packages venv`
+ - `source venv/bin/activate`
+ - `pip install -r requirements.txt`
+ - `npm install`
+ - `docker-compose build`
+ - `docker-compose up -d`
+ - `docker commit dockerbaseloginsocial_web_1 mysnapshot`
+ - `docker run -t -i mysnapshot /bin/bash`
+
+`docker stop $(docker ps -a -q)`
+`docker rm $(docker ps -a -q)`

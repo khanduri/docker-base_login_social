@@ -48,7 +48,7 @@ SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
 
 HASHIDS_SALT = os.environ['HASHIDS_SALT']
 
-SERVER_NAME = os.environ['SERVER_NAME']
+# SERVER_NAME = os.environ['SERVER_NAME']
 
 
 # Print the setup
@@ -56,7 +56,7 @@ output_strings = [
     '---- START: Server Details ----',
     'LOCAL DB setup in: {0}'.format(local_db),
     'Bootswatch template in use: %s' % BOOTSWATCH_TEMPLATE,
-    'Server name: %s' % SERVER_NAME,
+    # 'Server name: %s' % SERVER_NAME,
     '---- END: Server Details ----',
 ]
 
