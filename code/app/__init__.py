@@ -31,7 +31,8 @@ def make_celery(flask_app):
         abstract = True
 
         def __call__(self, *args, **kwargs):
-            with app.app_context():
+            # with app.app_context():
+            with app.test_request_context():
                 return TaskBase.__call__(self, *args, **kwargs)
     celery.Task = ContextTask
     return celery

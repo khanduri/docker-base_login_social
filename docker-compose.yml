@@ -1,17 +1,13 @@
-# version: '3'
-#
-# services:
 web:
     restart: always
-    build: ./web
+    build: ./code
     expose: 
         - "5454"
     ports:
         - "5454:5454"
     links:
         - database
-    # depends_on:
-    #     - mysql
+        - task_queue
     volumes:
         - /usr/src/app/static
     env_file: .env
@@ -27,13 +23,7 @@ nginx:
     volumes_from:
         - web
     links:
-        - web:web
-
-# data:
-#     restart: always
-#     image: mysql:5.7
-#     volumes_from:
-#         - database
+        - web
 
 database:
     restart: always
@@ -50,3 +40,23 @@ database:
         - "3306"
     ports:
         - "3306:3306"
+
+task_queue:
+    image: redis
+
+worker:
+    restart: always
+    build: ./code
+    expose: 
+        - "5455"
+    ports:
+        - "5455:5455"
+    links:
+        - database
+        - task_queue
+    volumes:
+        - /usr/src/app/static
+    env_file: .env
+    user: nobody
+    command: celery -A app.celery worker
+

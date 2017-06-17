@@ -161,3 +161,4 @@ export PYTHONPATH=/Users/prashantkhanduri/projects/flask/base_login_social
  - `docker-compose exec database mysql -u root -p`
  - `docker-compose run web /usr/local/bin/python manage.py db upgrade`
  - `docker-compose run web /usr/local/bin/python manage.py db migrate`
+ - `cp .env_template .env`
