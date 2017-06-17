@@ -4,7 +4,13 @@ dirname = os.path.split(os.path.dirname(__file__))[-1]
 # local_db = 'postgresql://localhost/{0}_db'.format(dirname)
 # local_db = 'sqlite:////tmp/sqlite/{0}.db'.format(dirname)
 # local_db = 'mysql://username:password@localhost/{0}'.format(dirname)
-local_db = 'mysql://root@localhost/{0}'.format(dirname)
+# local_db = 'mysql://root@localhost/{0}'.format(dirname)
+
+db_user = os.environ.get('DB_USER', 'root')
+db_password = os.environ.get('DB_PASSWORD', 'root')
+db_host = os.environ.get('DB_HOST', 'localhost')
+db_name = os.environ.get('DB_NAME', 'name')
+local_db = 'mysql://{0}:{1}@{2}/{3}'.format(db_user, db_password, db_host, db_name)
 
 
 SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', local_db)

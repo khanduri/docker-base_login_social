@@ -1,3 +1,6 @@
+# version: '3'
+#
+# services:
 web:
     restart: always
     build: ./web
@@ -6,34 +9,44 @@ web:
     ports:
         - "5454:5454"
     links:
-        - mysql:mysql
+        - database
+    # depends_on:
+    #     - mysql
     volumes:
         - /usr/src/app/static
     env_file: .env
     command: /usr/local/bin/gunicorn -w 2 -b 0.0.0.0:5454 app:app
 
-# nginx:
-#     restart: always
-#     build: ./nginx
-#     ports:
-#         - "80:80"
-#     volumes:
-#         - /www/static
-#     volumes_from:
-#         - web
-#     links:
-#         - web:web
-
-data:
+nginx:
     restart: always
-    image: mysql:latest
+    build: ./nginx
+    ports:
+        - "80:80"
+    volumes:
+        - /www/static
+    volumes_from:
+        - web
+    links:
+        - web:web
+
+# data:
+#     restart: always
+#     image: mysql:5.7
+#     volumes_from:
+#         - database
+
+database:
+    restart: always
+    image: mysql:5.7
     volumes:
         - /var/lib/mysql
-
-mysql:
-    restart: always
-    image: mysql:latest
-    volumes_from:
-        - data
+    environment:
+        MYSQL_DATABASE: "test"
+        MYSQL_USER: "test"
+        MYSQL_PASSWORD: "test"
+        MYSQL_ROOT_PASSWORD: "root"
+        MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    expose:
+        - "3306"
     ports:
         - "3306:3306"

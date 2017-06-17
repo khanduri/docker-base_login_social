@@ -70,15 +70,6 @@
         - http://localhost:5454/email/templates/email_verify
 
 
-
-# Random notes (you should not need to read the following)
-The following section is what I have to cleanup
-
-export PYTHONPATH=/Users/prashantkhanduri/projects/flask/base_login_social
-
-
-
-
 ------------------------------
 # Local Testing - Docker:
 
@@ -88,6 +79,15 @@ export PYTHONPATH=/Users/prashantkhanduri/projects/flask/base_login_social
 ## Build
  - `docker build -t docker-khanduri .`
  - `docker run -d --name khanduri-01 -p 5000:5000 docker-khanduri`
+
+
+
+# Random notes (you should not need to read the following)
+The following section is what I have to cleanup
+
+export PYTHONPATH=/Users/prashantkhanduri/projects/flask/base_login_social
+
+
 
 
 ------------------------------
@@ -154,5 +154,10 @@ export PYTHONPATH=/Users/prashantkhanduri/projects/flask/base_login_social
  - `docker commit dockerbaseloginsocial_web_1 mysnapshot`
  - `docker run -t -i mysnapshot /bin/bash`
 
-`docker stop $(docker ps -a -q)`
-`docker rm $(docker ps -a -q)`
+ - `docker stop $(docker ps -a -q)`
+ - `docker rm $(docker ps -a -q)`
+ - `docker-compose up -d`
+ - `docker-compose build`
+ - `docker-compose exec database mysql -u root -p`
+ - `docker-compose run web /usr/local/bin/python manage.py db upgrade`
+ - `docker-compose run web /usr/local/bin/python manage.py db migrate`
