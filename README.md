@@ -123,6 +123,8 @@ Dependencies:
 ------------------------------
 #  UNTESTED : PROD Push - Docker - AWS:
 
+http://blog.digitopia.com/elastic-beanstalk-docker-deployment/
+
 ## Setup
  - `pip install awsebcli`
  - `eb init`
@@ -143,3 +145,19 @@ Dependencies:
 The following section is what I have to cleanup
 export PYTHONPATH=/Users/prashantkhanduri/projects/flask/base_login_social
  - `pip install container-transform`
+ - `aws configure` # use k-submitter user
+ - `aws ecr get-login --no-include-email --region us-east-1`
+ - `docker tag dockerbaseloginsocial_nginx 152494051860.dkr.ecr.us-east-1.amazonaws.com/docker_base_login_social:nginx`
+ - `docker tag dockerbaseloginsocial_web 152494051860.dkr.ecr.us-east-1.amazonaws.com/docker_base_login_social:web`
+ - `docker tag dockerbaseloginsocial_worker 152494051860.dkr.ecr.us-east-1.amazonaws.com/docker_base_login_social:worker`
+ - `docker tag mysql:5.7 152494051860.dkr.ecr.us-east-1.amazonaws.com/docker_base_login_social:mysql_5.7`
+ - `docker tag redis 152494051860.dkr.ecr.us-east-1.amazonaws.com/docker_base_login_social:redis`
+ - `docker push 152494051860.dkr.ecr.us-east-1.amazonaws.com/docker_base_login_social:nginx`
+ - `docker push 152494051860.dkr.ecr.us-east-1.amazonaws.com/docker_base_login_social:web`
+ - `docker push 152494051860.dkr.ecr.us-east-1.amazonaws.com/docker_base_login_social:worker`
+ - `docker push 152494051860.dkr.ecr.us-east-1.amazonaws.com/docker_base_login_social:mysql_5.7`
+ - `docker push 152494051860.dkr.ecr.us-east-1.amazonaws.com/docker_base_login_social:redis`
+ - `eb local run`
+
+
+ - `docker-compose run web python manage.py db upgrade`

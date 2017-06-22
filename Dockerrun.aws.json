@@ -1,0 +1,151 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "memory": 128,
+      "environment": [
+        {
+          "name": "MYSQL_ALLOW_EMPTY_PASSWORD",
+          "value": "yes"
+        },
+        {
+          "name": "MYSQL_USER",
+          "value": "test"
+        },
+        {
+          "name": "MYSQL_ROOT_PASSWORD",
+          "value": "root"
+        },
+        {
+          "name": "MYSQL_PASSWORD",
+          "value": "test"
+        },
+        {
+          "name": "MYSQL_DATABASE",
+          "value": "test"
+        }
+      ],
+      "essential": true,
+      "mountPoints": [
+        {
+          "containerPath": "/var/lib/mysql",
+          "sourceVolume": "VarLibMysql"
+        }
+      ],
+      "name": "database",
+      "image": "152494051860.dkr.ecr.us-east-1.amazonaws.com/docker_base_login_social:mysql_5.7",
+      "portMappings": [
+        {
+          "containerPort": 3306,
+          "hostPort": 3306
+        }
+      ]
+    },
+    {
+      "memory": 128,
+      "essential": true,
+      "links": [
+        "web"
+      ],
+      "mountPoints": [
+        {
+          "containerPath": "/usr/src/app/static",
+          "sourceVolume": "Common-Vol"
+        },
+        {
+          "containerPath": "/www/static",
+          "sourceVolume": "WwwStatic"
+        }
+      ],
+      "name": "nginx",
+      "image": "152494051860.dkr.ecr.us-east-1.amazonaws.com/docker_base_login_social:nginx",
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "hostPort": 80
+        }
+      ]
+    },
+    {
+      "memory": 128,
+      "name": "task_queue",
+      "image": "152494051860.dkr.ecr.us-east-1.amazonaws.com/docker_base_login_social:redis",
+      "essential": true
+    },
+    {
+      "memory": 128,
+      "command": [ "./run.sh" ],
+      "essential": true,
+      "links": [
+        "database",
+        "task_queue"
+      ],
+      "mountPoints": [
+        {
+          "containerPath": "/usr/src/app/static",
+          "sourceVolume": "Common-Vol"
+        }
+      ],
+      "name": "web",
+      "image": "152494051860.dkr.ecr.us-east-1.amazonaws.com/docker_base_login_social:web",
+      "portMappings": [
+        {
+          "containerPort": 5454,
+          "hostPort": 5454
+        }
+      ]
+    },
+    {
+      "memory": 128,
+      "user": "nobody",
+      "command": [ "celery", "-A", "app.celery", "worker", "--uid=nobody" ],
+      "links": [
+        "database",
+        "task_queue"
+      ],
+      "mountPoints": [
+        {
+          "containerPath": "/usr/src/app/static",
+          "sourceVolume": "UsrSrcAppStatic"
+        }
+      ],
+      "name": "worker",
+      "cpu": 100,
+      "image": "152494051860.dkr.ecr.us-east-1.amazonaws.com/docker_base_login_social:worker",
+      "portMappings": [
+        {
+          "containerPort": 5455,
+          "hostPort": 5455
+        }
+      ],
+      "essential": true
+    }
+  ],
+  "volumes": [
+    {
+      "host": {
+        "sourcePath": "common-vol"
+      },
+      "name": "Common-Vol"
+    },
+    {
+      "host": {
+        "sourcePath": "/tmp/www/static"
+      },
+      "name": "WwwStatic"
+    },
+    {
+      "host": {
+        "sourcePath": "/tmp/usr/src/app/static"
+      },
+      "name": "UsrSrcAppStatic"
+    },
+    {
+      "host": {
+        "sourcePath": "/var/app/current/lib/mysql"
+      },
+      "name": "VarLibMysql"
+    }
+  ]
+}
+

@@ -16,9 +16,9 @@ services:
             - database
             - task_queue
         volumes:
-            - common-vol:/usr/src/app/static
+            - volume-static:/usr/src/app/static
         env_file: .env_docker
-        command: /usr/local/bin/gunicorn -w 2 -b 0.0.0.0:5454 app:app
+        command: ./run.sh
         networks:
             - webnet
 
@@ -28,7 +28,7 @@ services:
         ports:
             - "80:80"
         volumes:
-            - common-vol:/usr/src/app/static
+            - volume-static:/usr/src/app/static
             - /www/static
         links:
             - web
@@ -39,7 +39,7 @@ services:
         restart: always
         image: mysql:5.7
         volumes:
-            - /var/lib/mysql
+            - volume-db:/var/lib/mysql
         environment:
             MYSQL_DATABASE: "test"
             MYSQL_USER: "test"
@@ -78,3 +78,7 @@ services:
 
 networks:
     webnet:
+
+volumes:
+    volume-db:
+    volume-static:

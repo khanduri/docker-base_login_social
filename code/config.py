@@ -1,6 +1,6 @@
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
-dirname = os.path.split(os.path.dirname(__file__))[-1]
+# dirname = os.path.split(os.path.dirname(__file__))[-1]
 # local_db = 'postgresql://localhost/{0}_db'.format(dirname)
 # local_db = 'sqlite:////tmp/sqlite/{0}.db'.format(dirname)
 # local_db = 'mysql://username:password@localhost/{0}'.format(dirname)
