@@ -67,4 +67,4 @@ output_strings = [
 ]
 
 for output_string in output_strings:
-    print output_string
+    print(output_string)

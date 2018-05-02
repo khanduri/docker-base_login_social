@@ -1,4 +1,4 @@
-from sendgrid import Mail
+from sendgrid.helpers.mail import Mail
 from app import sg
 
 
@@ -10,5 +10,5 @@ def send_message_with_sg(send_to, send_from, subject, body):
     message.set_subject(subject)
     message.set_html(body)
 
-    print "Sending email:({}) to :({})".format(subject, send_to)
+    print("Sending email:({}) to :({})".format(subject, send_to))
     sg.send(message)

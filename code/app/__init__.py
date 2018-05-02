@@ -1,8 +1,8 @@
 from flask import Flask
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.login import LoginManager
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 from celery import Celery
-from sendgrid import SendGridClient
+from sendgrid import SendGridAPIClient
 from flask_admin import Admin
 from hashids import Hashids
 import logging
@@ -43,7 +43,7 @@ db = SQLAlchemy(app)
 lm = LoginManager(app)
 lm.login_view = 'index_page'
 
-sg = SendGridClient(app.config['SENDGRID_USER'], app.config['SENDGRID_API_KEY'])
+sg = SendGridAPIClient(apikey=app.config['SENDGRID_API_KEY'])
 
 hashids = Hashids(salt=app.config.get('HASHIDS_SALT'), min_length=8)
 

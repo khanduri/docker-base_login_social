@@ -1,28 +1,38 @@
 {
   "name": "base_login_social",
   "version": "1.0.0",
-  "description": "- virtualenv virenv --no-site-packages  - source virenv/bin/activate  - open up postgres cmd shell    - create db    - \\l: list all databases    - \\c: connect to the data base    - \\dt: list all tables under the connected database  - python manage.py db init  - python manage.py db upgrade  - python manage.py db migrate",
-  "main": "index.js",
+  "license": "MIT",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack -p --progress",
+    "build-dev": "webpack --progress --profile --colors --display-error-details --display-cached --verbose -d",
+    "watch": "webpack --progress -d --config webpack.config.js --watch",
+    "dev": "webpack-dev-server --inline --hot",
+    "scss": "node-sass --watch static/styles/scss -o static/dist"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/khanduri/base_login_social.git"
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "bootstrap-sass": "^3.3.7",
+    "css-loader": "^0.28.11",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.11",
+    "node-sass": "^4.8.3",
+    "popper.js": "^1.14.3",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
+    "sass-loader": "^6.0.7",
+    "style-loader": "^0.20.3",
+    "url-loader": "^0.6.2",
+    "webpack": "^3.11.0",
+    "webpack-dev-server": "^2.11.1"
   },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/khanduri/base_login_social/issues"
-  },
-  "homepage": "https://github.com/khanduri/base_login_social#readme",
   "dependencies": {
-    "gulp": "^3.9.1",
-    "gulp-clean": "^0.3.2",
-    "gulp-concat": "^2.6.0",
-    "gulp-react": "^3.1.0",
-    "gulp-sass": "^2.3.1",
-    "gulp-size": "^2.1.0",
-    "gulp-uglify": "^1.5.3"
+    "axios": "^0.18.0",
+    "bootstrap": "^4.1.0",
+    "font-awesome": "^4.5.0",
+    "jquery": "^3.3.1",
+    "react-photo-gallery": "^6.0.24"
   }
 }

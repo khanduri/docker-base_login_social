@@ -18,7 +18,7 @@ from app.helpers.oauth import OAuthSignIn
 from app.helpers.email import EMAIL_TEMPLATE_MAP
 from app.tasks.emails.verification_email import send_email_verification_link
 from app.tasks.emails.sample import send_sample_email
-from flask.ext.login import (
+from flask_login import (
     login_user,
     logout_user,
     current_user,
@@ -41,7 +41,7 @@ def _get_template_config(title='Home'):
 @app.route('/')
 @app.route('/index')
 def index_page():
-    app.logger.info('LOGGER: On the index page yo!')
+    app.logger.info('LOGGER: On the index page!')
     return render_template('index.html',
                            config=_get_template_config(),
                            current_user=current_user)

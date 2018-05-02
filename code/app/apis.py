@@ -1,6 +1,6 @@
 from app import app
 from flask import request
-from flask.ext.login import login_required
+from flask_login import login_required
 from app.helpers import api_response
 from app.tasks.emails.verification_email import send_email_verification_link
 

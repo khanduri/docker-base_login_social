@@ -3,26 +3,35 @@ Dependencies:
  - virtualenv
  - MySql (OLD: postgres)
  - celery
- - redis
+ - redis: brew install redis
  - node
 
 ------------------------------
 # Local Dev (mac OSx):
 
 ## Setup
- - `virtualenv --no-site-packages venv`
+ - `virtualenv -p python3 venv`
  - `source venv/bin/activate`
- - `pip install -r requirements.txt`
+ - `pip install Flask alembic Flask-login celery sendgrid Flask-admin hashids Flask-script Flask-migrate flask_wtf rauth mysqlclient gunicorn`
+
+ - `mysql -u root -h localhost`
+    - `create database retro;`
+    - `python manage.py db init`
+    - `python manage.py db migrate`
+
  - `npm install`
- - `npm install -g bower`
- - `mysql -u root -h localhost`  # to login to the mysql shell
-   - `create database base_login_social`
+ - `npm run watch .`
+ - `npm run build .`
+ - `npm run scss`
+
  - `cp _env_template .env_local` .. and fill in the key values
     - Facebook: https://developers.facebook.com/apps
     - Twitter:
     - Sendgrid:
     - db info
     - redis info
+
+ - `./run.sh`    
 
 ## Debug
  - Setup app database:
@@ -50,7 +59,7 @@ Dependencies:
         - http://localhost:5454/
     - admin:
         - http://localhost:5454/admin/
-        - User with id == 1 will be an admin. You should change that logic soon :)
+        - User with id == 1 will be an admin. You should change that :)
     - trigger an email:
         - http://localhost:5454/send_email
     - template email:
